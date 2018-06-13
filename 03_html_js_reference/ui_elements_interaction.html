@@ -1,0 +1,484 @@
+<!-- 
+
+  | ~ ~ ~ ~ ~ ~ || WEB AUDIO API WORKSHOP || ~ ~ ~ ~ ~ ~ |
+
+  This file is a collection of the most common and useful
+  UI elements with the relative HTML tag that you can
+  copy/paste to add to your Web Audio API instrument.
+  Please open it in a browser to preview the UI elements
+  and the code snippets.
+
+  By Alessandro Contini
+
+  Released under Beer-Ware license https://en.wikipedia.org/wiki/Beerware
+
+ -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>UI Elements Interaction</title>
+</head>
+
+<style type="text/css">
+  body {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  h1 {
+    font-weight: bold;
+    font-size: 3em;
+  }
+  h2 {
+    font-weight: bold;
+    font-size: 2em;
+  }
+  .row {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background: whitesmoke;
+    max-width: 800px;
+  }
+  input {
+    display: block;
+  }
+  pre {
+    margin: .5em 0;
+  }
+  pre, code {
+    padding: 0 .5em;
+    background-color: springgreen;
+  }
+  a {
+    font-style: italic;
+  }
+</style>
+
+<body>
+  <h1>The basic User Interface elements 🤘</h1>
+
+  <div class="row">
+    <code>
+      &lt;div id="myFirstDiv" style="background:red; width:100px; height:100px;"&gt;Hello!&lt;/div&gt;
+    </code>
+    <div id="myFirstDiv" style="background:red; width:100px; height:100px;">Hello!</div>
+  </div>
+
+  <div class="row">
+    <code>
+      &lt;img src="https://pbs.twimg.com/profile_images/625769159339737088/2dwpQAXA_400x400.jpg"&gt;
+    </code>
+    <br>
+    <img src="https://pbs.twimg.com/profile_images/625769159339737088/2dwpQAXA_400x400.jpg">
+  </div>
+
+  <div class="row">
+<pre>
+<code>
+&lt;map name="imgLink"&gt;
+  &lt;area shape="circle" coords="75,75,75" href="http://www.google.com" target="_blank"&gt;
+&lt;/map&gt;
+&lt;img usemap="#imgLink" src="https://pbs.twimg.com/profile_images/625769159339737088/2dwpQAXA_400x400.jpg"&gt;
+</code>
+</pre>
+    <map name="imgLink">
+      <area shape="circle" coords="75,75,75" href="http://www.google.com" target="_blank">
+    </map>
+    <img usemap="#imgLink" src="https://pbs.twimg.com/profile_images/625769159339737088/2dwpQAXA_400x400.jpg">
+    <br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/map" target="_blank">learn more...</a>
+  </div>
+
+  <div class="row">
+    <code>
+      &lt;a href="http://www.google.com" target="_blank"&gt;link to google&lt;/a&gt;
+    </code>
+    <a href="http://www.google.com" target="_blank">link to google</a>
+  </div>
+
+  <div class="row">
+<pre>
+<code>
+  &lt;p style="color: red;"&gt;Red paragraph 😍&lt;/p&gt;
+  &lt;p style="color: blue;"&gt;Blue paragraph 😱&lt;/p&gt;
+</code>
+</pre>
+    <p style="color: red;">Red paragraph 😍</p>
+    <p style="color: blue;">Blue paragraph 😱</p>
+  </div>
+
+  <div class="row">
+    <code>
+      &lt;span style="color: red;"&gt;Red text&lt;/span&gt;
+      &lt;span style="color: blue;"&gt;Blue text&lt;/span&gt;
+    </code>
+    <br>
+    <span style="color: red;">Red text</span>
+    <span style="color: blue;">Blue text</span>
+  </div>
+
+  <div class="row">
+    <code>
+      &lt;button type="button" name="button" value="1"&gt;Click me&lt;button&gt;
+    </code>
+    <br>
+    <button type="button" name="button" value="1">Click me</button>
+    <br>
+    <code>
+      &lt;button type="button" name="button" value="1" disabled=""&gt;Click me&lt;button&gt;
+    </code>
+    <br>
+    <button type="button" name="button" value="1" disabled="">Click me</button>
+    <br>
+    <br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button" target="_blank">learn more...</a>
+  </div>
+  
+  <div class="row">
+    <code>
+      &lt;input type="checkbox"&gt;
+    </code>
+    <input type="checkbox">
+    <code>
+      &lt;input type="checkbox" checked=""&gt;
+    </code>
+    <input type="checkbox" checked="">
+    <br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox" target="_blank">learn more...</a>
+  </div>
+
+  <div class="row">
+    <code>
+      &lt;input type="radio"&gt;
+    </code>
+    <input type="radio">
+    <code>
+      &lt;input type="radio" checked=""&gt;
+    </code>
+    <input type="radio" checked="">
+    <pre>
+      <code>
+&lt;form&gt;
+  &lt;div&gt;
+    &lt;input type="radio" id="choice1" name="radio" value="01"&gt;
+    &lt;label for="choice1"&gt;01&lt;/label&gt;
+
+    &lt;input type="radio" id="choice2" name="radio" value="02"&gt;
+    &lt;label for="choice2"&gt;02&lt;/label&gt;
+
+    &lt;input type="radio" id="choice3" name="radio" value="03"&gt;
+    &lt;label for="choice3"&gt;03&lt;/label&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+      </code>
+    </pre>
+    <form>
+      <div>
+        <input type="radio" id="choice1" name="radio" value="01">
+        <label for="choice1">01</label>
+
+        <input type="radio" id="choice2" name="radio" value="02">
+        <label for="choice2">02</label>
+
+        <input type="radio" id="choice3" name="radio" value="03">
+        <label for="choice3">03</label>
+      </div>
+    </form>
+    <br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio" target="_blank">learn more...</a>
+  </div>
+
+  <div class="row">
+    <code>
+      &lt;input type="range"&gt;
+    </code>
+    <input type="range">
+<pre>
+<code>
+&lt;input type="range" min="0" max="10" step="2" list="tickmarks"&gt;
+&lt;datalist id="tickmarks"&gt;
+  &lt;option value="0"&gt;
+  &lt;option value="2"&gt;
+  &lt;option value="4"&gt;
+  &lt;option value="6"&gt;
+  &lt;option value="8"&gt;
+  &lt;option value="10"&gt;
+&lt;/datalist&gt;
+</code>
+</pre>
+    <input type="range" min="0" max="10" step="2" list="tickmarks">
+    <datalist id="tickmarks">
+      <option value="0">
+      <option value="2">
+      <option value="4">
+      <option value="6">
+      <option value="8">
+      <option value="10">
+    </datalist>
+    <br>
+    <code>
+      &lt;input type="range" style="transform-origin: 75px 75px; transform: rotate(-90deg);"&gt;
+    </code>
+    <input type="range" style="transform-origin: 75px 75px; transform: rotate(-90deg);">
+    <br><br><br><br><br><br><br><br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range" target="_blank">learn more...</a>
+  </div>
+
+  <div class="row">
+    <code>
+      &lt;meter min="0" max="100" value="70"&gt;&lt;/meter&gt;
+    </code>
+    <meter min="0" max="100" value="70"></meter>
+    <br>
+    <code>
+      &lt;meter min="0" max="100" low="51" high="80" value="15"&gt;&lt;/meter&gt;
+    </code>
+    <meter min="0" max="100" low="51" high="80" value="15"></meter>
+    <br>
+    <code>
+      &lt;meter min="0" max="100" low="51" high="80" value="70"&gt;&lt;/meter&gt;
+    </code>
+    <meter min="0" max="100" low="51" high="80" value="70"></meter>
+    <br>
+    <code>
+      &lt;meter min="0" max="100" low="51" high="80" value="90"&gt;&lt;/meter&gt;
+    </code>
+    <meter min="0" max="100" low="51" high="80" value="90"></meter>
+    <br><br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meter" target="_blank">learn more...</a>
+  </div>
+
+  <div class="row">
+    <code>
+      &lt;progress value="70" max="100"&gt;&lt;/progress&gt;
+    </code>
+    <progress value="70" max="100"></progress>
+    <br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress" target="_blank">learn more...</a>
+  </div>
+
+  <div class="row">
+    <pre>
+      <code>
+&lt;select&gt;
+  &lt;option value="first"&gt;First Value&lt;/option&gt;
+  &lt;option value="second" selected&gt;Second Value&lt;/option&gt;
+  &lt;option value="third"&gt;Third Value&lt;/option&gt;
+&lt;/select&gt;
+      </code>
+    </pre>
+    <select>
+      <option value="first">First Value</option> 
+      <option value="second" selected>Second Value</option>
+      <option value="third">Third Value</option>
+    </select>
+    <br>
+    <pre>
+      <code>
+&lt;select multiple=""&gt;
+  &lt;option value="first"&gt;First Value&lt;/option&gt;
+  &lt;option value="second"&gt;Second Value&lt;/option&gt;
+  &lt;option value="third"&gt;Third Value&lt;/option&gt;
+&lt;/select&gt;
+      </code>
+    </pre>
+    <select multiple="">
+      <option value="first">First Value</option> 
+      <option value="second">Second Value</option>
+      <option value="third">Third Value</option>
+    </select>
+    <br>
+    <br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select" target="_blank">learn more...</a>
+  </div>
+
+  <div class="row">
+    <code>
+      &lt;input type="text"&gt;
+    </code>
+    <input type="text">
+    <code>
+      &lt;input type="text" placeholder="Placeholder text"&gt;
+    </code>
+    <input type="text" placeholder="Placeholder text">
+    <br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text" target="_blank">learn more...</a>
+  </div>
+
+  <div class="row">
+    <code>
+      &lt;textarea&gt;&lt;/textarea&gt;
+    </code>
+    <textarea></textarea>
+    <br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea" target="_blank">learn more...</a>
+  </div>
+
+  <div class="row">
+    <code>
+      &lt;input type="number"&gt;
+    </code>
+    <input type="number">
+  </div>
+  
+  <div class="row">
+    <code>
+      &lt;input type="color"&gt;
+    </code>
+    <input type="color">
+    <code>
+      &lt;input type="color" value="#ff0000"&gt;
+    </code>
+    <input type="color" value="#ff0000">
+    <br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/color" target="_blank">learn more...</a>
+  </div>
+
+  <div class="row">
+    <code>
+      &lt;input type="submit"&gt;
+    </code>
+    <input type="submit">
+    <br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/submit" target="_blank">learn more...</a>
+  </div>
+  
+  <div class="row">
+    <code>
+      &lt;input type="date"&gt;
+    </code>
+    <input type="date">
+    <br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date" target="_blank">learn more...</a>
+  </div>
+  
+  <div class="row">
+    <code>
+      &lt;input type="file"&gt;
+    </code>
+    <input type="file">
+    <br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file" target="_blank">learn more...</a>
+  </div>
+
+  <div class="row">
+    <pre>
+      <code>
+&lt;details&gt;
+  &lt;summary&gt;Expand/Hide content&lt;/summary&gt;
+  &lt;p&gt;Content expanded!&lt;/p&gt;
+&lt;/details&gt;
+      </code>
+    </pre>
+    <details>
+      <summary>Expand/Hide content</summary>
+      <p>Content expanded!</p>
+    </details>
+    <br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details" target="_blank">learn more...</a>
+  </div>
+
+  <div class="row">
+    <code>
+      &lt;input type="month"&gt;
+    </code>
+    <input type="month">
+    <br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/month" target="_blank">learn more...</a>
+  </div>
+  
+  <div class="row">
+    <code>
+      &lt;input type="password"&gt;
+    </code>
+    <input type="password">
+    <br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/password" target="_blank">learn more...</a>
+  </div>
+
+  <div class="row">
+    <code>
+      &lt;input type="reset"&gt;
+    </code>
+    <input type="reset">
+    <br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/reset" target="_blank">learn more...</a>
+  </div>
+  
+  <div class="row">
+    <code>
+      &lt;input type="search"&gt;
+    </code>
+    <input type="search">
+    <br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/search" target="_blank">learn more...</a>
+  </div>
+
+  <div class="row">
+    <code>
+      &lt;input type="time"&gt;
+    </code>
+    <input type="time">
+    <br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/time" target="_blank">learn more...</a>
+  </div>
+  
+  <div class="row">
+    <code>
+      &lt;input type="url"&gt;
+    </code>
+    <input type="url">
+    <br>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/url" target="_blank">learn more...</a>
+  </div>  
+
+  <h2>More info at</h2>
+  <ul>
+    <li>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element" target="_blank">https://developer.mozilla.org/en-US/docs/Web/HTML/Element</a>
+    </li>
+    <li>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input" target="_blank">https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input</a>
+    </li>
+    <li>
+      <a href="https://www.w3schools.com/tags/default.asp" target="_blank">https://www.w3schools.com/tags/default.asp</a>
+    </li>
+    <li>
+      <a href="https://www.w3schools.com/tags/tag_input.asp" target="_blank">https://www.w3schools.com/tags/tag_input.asp</a>
+    </li>
+    <li>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement" target="_blank">https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement</a>
+    </li>
+    <li>
+      <a href="https://unicode.org/emoji/charts/full-emoji-list.html" target="_blank">https://unicode.org/emoji/charts/full-emoji-list.html</a>
+    </li>
+  </ul>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

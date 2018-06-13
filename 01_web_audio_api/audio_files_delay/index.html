@@ -1,0 +1,47 @@
+<!-- 
+
+  | ~ ~ ~ ~ ~ ~ || WEB AUDIO API WORKSHOP || ~ ~ ~ ~ ~ ~ |
+
+  This file will play a sample applying a delay effect
+
+  By Alessandro Contini
+  Based on https://github.com/chrisdavidmills/create-delay
+
+  Released under Beer-Ware license https://en.wikipedia.org/wiki/Beerware
+
+ -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+
+    <title>Delay example</title>
+  </head>
+
+<!-- THE STYLE -->
+  <style type="text/css">
+    body {
+      font-family: Helvetica, Arial;
+      font-weight: bold;
+      font-size: 4em;
+      /*text-align: center;*/
+    }
+  </style>
+
+<!-- THE CONTENT -->
+  <body>
+    <div>
+      <p>Snare drum delay</p>
+      <button class="play-snare">Play</button>
+      <button class="play-snare-loop" data-active="false">Play loop</button>
+      <input type="range" min="0" max="1" value="0" step="0.001">
+      <span class="delay-value">0</span><span> ms</span>
+    </div>
+  </body>
+
+<!-- THE MAGIC! -->
+  <script src="main-EDIT.js"></script>
+</html>

@@ -1,0 +1,58 @@
+<!-- 
+
+  | ~ ~ ~ ~ ~ ~ || WEB AUDIO API WORKSHOP || ~ ~ ~ ~ ~ ~ |
+
+  Move your mouse to play the browser like a theremin!
+
+  By Alessandro Contini
+
+  Released under Beer-Ware license https://en.wikipedia.org/wiki/Beerware
+
+ -->
+
+<!doctype html>
+<html>
+  <head>
+    <title>Theremin</title>
+  </head>
+  
+<!-- THE STYLE -->
+  <style type="text/css">
+    body {
+      font-family: Helvetica, Arial;
+      font-weight: bold;
+      font-size: 1em;
+      text-align: center;
+    }
+  </style>
+
+<!-- THE CONTENT -->
+  <body>
+      <h1>Move your mouse to play the browser like a Theremin!</h1>
+  </body>
+
+<!-- CALL THERESA! -->
+  <script src="tsw.min.js"></script>
+
+<!-- THE MAGIC! -->
+  <script>
+    var osc = tsw.osc(1, 'triangle');
+    var volume = tsw.gain();
+    tsw.connect(osc, volume, tsw.speakers);
+    osc.start();
+
+    function map(x, in_min, in_max, out_min, out_max) {
+      // return parseInt((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
+      return ((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
+    };
+
+    document.addEventListener('mousemove', function(){ getCoordinates(event) }, false);
+    function getCoordinates(e) {
+      var x = e.clientX;
+      var freq = e.clientY;
+      osc.frequency(freq);
+      var vol = map(x, 0, window.innerWidth, 0, 1);
+      volume.gain(vol);
+    };  
+  </script>
+</html>

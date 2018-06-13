@@ -1,0 +1,104 @@
+<!-- 
+
+  | ~ ~ ~ ~ ~ ~ || WEB AUDIO API WORKSHOP || ~ ~ ~ ~ ~ ~ |
+
+  This file will play a sample applying a reverb effect
+
+  By Alessandro Contini
+
+  Released under Beer-Ware license https://en.wikipedia.org/wiki/Beerware
+
+ -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Reverb FX</title>
+  </head>
+
+<!-- CONTENT -->
+  <body>
+    <h2>Reverb Effects</h2>
+    <p>
+      Choose Reverb and press the button
+    </p>
+    <form>
+      <div>
+        <input type="radio" id="radioChoice1" name="radio" value="3">
+        <label for="radioChoice1">Church</label>
+
+        <input type="radio" id="radioChoice2" name="radio" value="2">
+        <label for="radioChoice2">Room</label>
+
+        <input type="radio" id="radioChoice3" name="radio" value="1">
+        <label for="radioChoice3">Spring</label>
+      </div>
+    </form>
+    <button class="play_sound">Play</button>
+  </body>
+
+<!-- MAGIC -->
+  <script>
+    // Create audio context
+    var AudioContext = window.AudioContext || window.webkitAudioContext;
+    var audioCtx = new AudioContext();
+    var destination = audioCtx.destination;
+
+    // Function to get samples
+    var buffers = [];
+    function getData(track) {
+      var request = new XMLHttpRequest();
+      request.open('GET', track , true);
+      request.responseType = 'arraybuffer';
+
+      request.onload = function() {
+        audioCtx.decodeAudioData(request.response, function(buffer) {
+            myBuffer = buffer;
+            buffers.push(myBuffer);
+          },
+          function(e){"Error with decoding audio data" + e.err});
+      }
+      request.send();
+    }
+
+    // Get samples
+    getData('01snare.ogg'); // audio sample
+    getData('reverb-church.wav'); // impulse response
+    getData('reverb-radio.wav');  // impulse response
+    getData('reverb-spring.wav'); // impulse response
+
+    // Reverb selection
+    var radio01 = document.querySelector('#radioChoice1');
+    var radio02 = document.querySelector('#radioChoice2');
+    var radio03 = document.querySelector('#radioChoice3');
+
+    var reverbValue;
+    radio01.oninput = function() {
+      reverbValue = radio01.value;
+    }
+    radio02.oninput = function() {
+      reverbValue = radio02.value;
+    }
+    radio03.oninput = function() {
+      reverbValue = radio03.value;
+    }
+
+    // Play sample
+    var playSound = document.querySelector('.play_sound');
+
+    var source;
+    var convolver;
+
+    playSound.onclick = function() {
+      source = audioCtx.createBufferSource();
+      source.buffer = buffers[0];
+      
+      convolver = audioCtx.createConvolver();
+      convolver.buffer = buffers[reverbValue];
+
+      source.connect(convolver);
+      convolver.connect(destination);
+      source.start();
+    }
+  </script>
+</html>

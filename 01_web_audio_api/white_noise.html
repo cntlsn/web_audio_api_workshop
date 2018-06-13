@@ -1,0 +1,57 @@
+<!-- 
+
+  | ~ ~ ~ ~ ~ ~ || WEB AUDIO API WORKSHOP || ~ ~ ~ ~ ~ ~ |
+
+  This file will play white noise!
+
+  By Alessandro Contini
+
+  Released under Beer-Ware license https://en.wikipedia.org/wiki/Beerware
+
+ -->
+<html>
+  <head>
+    <title>White noise</title>
+  </head>
+
+<!-- THE STYLE -->
+  <style type="text/css">
+    body {
+      font-family: Helvetica, Arial;
+      font-weight: bold;
+      font-size: 10em;
+      text-align: center;
+    }
+  </style>
+
+<!-- THE CONTENT -->
+  <body>
+    <span>White noise</span>
+  </body>
+
+<!-- THE MAGIC! -->
+  <script type="text/javascript">
+    // Create audio (context) container
+    var context = new (AudioContext || webkitAudioContext)();
+
+    window.onload = function WhiteNoiseGenerated(callback) {
+      // Generate a 1 second white noise buffer.
+      var lengthInSamples = 1 * context.sampleRate;
+      var buffer = context.createBuffer(1, lengthInSamples, context.sampleRate); 
+      var data = buffer.getChannelData(0);
+
+      for (var i = 0; i < lengthInSamples; i++) {
+        data[i] = ((Math.random() * 2) - 1);
+      }
+            
+      // Create a source node from the buffer.
+      this.node = context.createBufferSource(); 
+      this.node.buffer = buffer;
+      this.node.loop = true; 
+      this.node.start(0);
+      this.node.connect(context.destination);
+    }
+
+
+  </script>
+</html>

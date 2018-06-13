@@ -1,0 +1,92 @@
+<!-- 
+
+  | ~ ~ ~ ~ ~ ~ || WEB AUDIO API WORKSHOP || ~ ~ ~ ~ ~ ~ |
+
+  This file will get the signal from mic/line in and
+  add distortion effect
+
+  By Alessandro Contini
+  Based on work by Stuart Memo
+
+  Released under Beer-Ware license https://en.wikipedia.org/wiki/Beerware
+
+ -->
+
+ <html>
+  <head>
+    <title>Live Distortion</title>
+  </head>
+
+<!-- THE STYLE -->
+  <style type="text/css">
+    body {
+      font-family: Helvetica, Arial;
+      font-weight: bold;
+      font-size: 10em;
+      text-align: center;
+    }
+  </style>
+
+<!-- THE CONTENT -->
+  <body>
+    <span>Distortion!</span>
+  </body>
+
+<!-- THE MAGIC! -->
+  <script type="text/javascript">
+    // Create audio (context) container
+    var audio = new (AudioContext || webkitAudioContext)();
+
+    var distortionNode = audio.createWaveShaper();
+
+    // MOZILLA DISTORTION
+    // function makeDistortionCurve(amount) {
+    //   var k = typeof amount === 'number' ? amount : 50,
+    //     n_samples = 44100,
+    //     curve = new Float32Array(n_samples),
+    //     deg = Math.PI / 180,
+    //     i = 0,
+    //     x;
+    //   for ( ; i < n_samples; ++i ) {
+    //     x = i * 2 / n_samples - 1;
+    //     curve[i] = ( 3 + k ) * x * 20 * deg / ( Math.PI + k * Math.abs(x) );
+    //   }
+    //   return curve;
+    // };
+
+    // distortionNode.curve = makeDistortionCurve(400);
+    // distortionNode.oversample = '4x';
+
+    // STUART MEMO DISTORTION
+    var makeDistortionCurve = function (noOfSamples, amountOfDistortion) {
+        if (typeof amountOfDistortion === 'undefined') {
+            amountOfDistortion = 0.1;
+        }
+        var k = 2 * amountOfDistortion/ (1 - amountOfDistortion),
+            curve = new Float32Array(noOfSamples);
+
+        for (var i = 0; i < noOfSamples; i++) {
+            var x = (i - 0) * (1 - (-1)) / (noOfSamples - 0) + (-1);
+            curve[i] = (1 + k) * x / (1+ k * Math.abs(x));
+        }
+
+        return curve;
+    }
+
+    distortionNode.curve = makeDistortionCurve(audio.sampleRate, 10);
+
+    function gotStream(stream) {
+      var guitar = audio.createMediaStreamSource(stream);
+
+      // ROUTING
+      guitar.connect(distortionNode); 
+      distortionNode.connect(audio.destination);
+    }
+
+    function gotStreamError() {
+      console.log("Sorry");
+    }
+
+    navigator.webkitGetUserMedia({audio: true}, gotStream, gotStreamError);
+  </script>
+</html>

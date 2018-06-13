@@ -1,0 +1,74 @@
+<!-- 
+
+  | ~ ~ ~ ~ ~ ~ || WEB AUDIO API WORKSHOP || ~ ~ ~ ~ ~ ~ |
+
+  This file will play a sample applying a compressor effect.
+
+  By Alessandro Contini
+  based on work by Boris Smus
+
+  Released under Beer-Ware license https://en.wikipedia.org/wiki/Beerware
+
+ -->
+
+<html>
+  <head>
+    <title>Compressor</title>
+  </head>
+
+<!-- THE STYLE -->
+  <style type="text/css">
+    body {
+      font-family: Helvetica, Arial;
+      font-weight: bold;
+      font-size: 4em;
+      text-align: center;
+    }
+  </style>
+
+<!-- THE CONTENT -->
+  <body>
+    Press Q to PLAY!
+  </body>
+
+<!-- THE MAGIC! -->
+  <script src="shared.js"></script>
+  <script type="text/javascript">
+    loadSounds(this, {
+      sound: 'amen.wav'
+    });
+
+    function playSound(buffer, time) {
+      var source = context.createBufferSource();
+      source.buffer = buffer;
+      source.connect(compressor);
+      source.loop = true;
+      source.start(context.currentTime);
+    }
+
+    // ----- COMPRESSOR PARAMETERS ----- //
+    var compressor = context.createDynamicsCompressor();
+    compressor.threshold.value = -30;
+    compressor.knee.value = 10;
+    compressor.ratio.value = 20;
+    compressor.attack.value = .5;
+    compressor.release.value = 1;
+
+    // ----- ROUTING ----- //
+    compressor.connect(context.destination);
+
+    // ----- INTERACTION ----- //
+    window.addEventListener("load", loadSounds);
+
+    window.addEventListener("keydown", function(e) {
+     // console.log(e);
+     switch (e.keyCode) {   // check keyCode here http://keycode.info/
+          case 81: // Q
+            playSound(this.sound, 0);
+          break;
+          case 87: // W
+            playSound.stopSound();
+          break;
+     }})
+  </script>
+</html>

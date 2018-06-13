@@ -1,0 +1,75 @@
+<!-- 
+
+  | ~ ~ ~ ~ ~ ~ || WEB AUDIO API WORKSHOP || ~ ~ ~ ~ ~ ~ |
+
+  This file will play a sine wave and let you set the
+  panning (move between Left/Right channels) in real time.
+  1 = full Right channel
+  -1 = full Left channel
+
+  By Alessandro Contini
+
+  Released under Beer-Ware license https://en.wikipedia.org/wiki/Beerware
+
+ -->
+
+<html>
+  <head>
+    <title>Pan</title>
+  </head>
+
+<!-- THE STYLE -->
+  <style type="text/css">
+    body {
+      font-family: Helvetica, Arial;
+      font-weight: bold;
+      font-size: 20em;
+      text-align: center;
+    }
+  </style>
+
+<!-- THE CONTENT -->
+  <body>
+    <div id="ui">
+      <span class="panning-value">0</span><br>
+      <input class="panning-control" type="range" min="-1" max="1" step="0.1" value="0">
+    </div>
+  </body>
+
+<!-- THE MAGIC! -->
+  <script type="text/javascript">
+    // Create audio (context) container
+    var audio = new (AudioContext || webkitAudioContext)();
+
+    // ----- OSCILLATOR ----- //
+    // Create an oscillator
+    var oscillator = audio.createOscillator();
+    // Choose waveform: 'sine', 'triangle', 'sawtooth', and 'square'
+    oscillator.type = 'sine';
+    // Choose frequency
+    oscillator.frequency.value = 440;
+    // Play the waveform
+    oscillator.start(audio.currentTime);
+
+    // ----- PAN ----- //
+    var panControl = document.querySelector('.panning-control');
+    var panValue = document.querySelector('.panning-value');
+
+    // Create a stereo panner
+    var panNode = audio.createStereoPanner();
+
+    panControl.oninput = function() {
+      // panNode.pan.setValueAtTime(panControl.value, audio.currentTime);
+      panNode.pan.linearRampToValueAtTime(panControl.value, audio.currentTime + 0.01);  // by adding a tiny delay it's possible to avoid clicks
+      panValue.innerHTML = panControl.value;
+    }
+
+    // ----- ROUTING ----- //
+    oscillator.connect(panNode);
+    panNode.connect(audio.destination);
+
+    // ----- CONSOLE FEEDBACK ----- //
+    console.log(oscillator.type);
+    console.log(oscillator.frequency.value);
+  </script>
+</html>

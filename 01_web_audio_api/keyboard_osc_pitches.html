@@ -1,0 +1,145 @@
+<!-- 
+
+  | ~ ~ ~ ~ ~ ~ || WEB AUDIO API WORKSHOP || ~ ~ ~ ~ ~ ~ |
+
+  This file will play a a sine at different pitches!
+  The Keyboard works like this
+
+  |   |   | |   |   |   |   | |   | |   |   |   |
+  |   | W | | E |   |   | T | | Y | | U |   |   |
+  |   |___| |___|   |   |___| |___| |___|   |   |___
+  |     |     |     |     |     |     |     |     |
+  |  A  |  S  |  D  |  F  |  G  |  H  |  J  |  K  |
+  |_____|_____|_____|_____|_____|_____|_____|_____|_
+
+  By Alessandro Contini
+
+  Released under Beer-Ware license https://en.wikipedia.org/wiki/Beerware
+
+ -->
+
+<html>
+  <head>
+    <title>Keyboard</title>
+  </head>
+
+<!-- THE STYLE -->
+  <style type="text/css">
+    body {
+      font-family: Helvetica, Arial;
+      font-weight: bold;
+      font-size: 20em;
+      text-align: center;
+    }
+  </style>
+
+<!-- THE CONTENT -->
+  <body>
+    <div id="oscType">
+      <!-- Empty element to be filled with oscillator waveform type and frequency value -->
+    </div>
+    <div id="oscNote"></div>
+  </body>
+
+<!-- THE MAGIC! -->
+  <script type="text/javascript">
+    // Create audio (context) container
+    var audio = new (AudioContext || webkitAudioContext)();
+
+    // ----- OSCILLATOR OPTIONS ----- //
+    var oscillatorType = 'sine'; // Choose waveform: 'sine', 'triangle', 'sawtooth', and 'square'
+    var oscillatorFreqInitVal = 261.63; // Starting freq is C4
+    // var oscillatorFreq = 0;
+
+    // Create an oscillator
+    var oscillator = audio.createOscillator();
+    oscillator.frequency.setValueAtTime(oscillatorFreqInitVal, audio.currentTime);
+    oscillator.start(audio.currentTime); // Start the oscillator
+    
+    // ----- PLAY FUNCTION ----- //
+    function noteOn() {
+      oscillator.connect(audio.destination);
+      // analyser.getFloatFrequencyData(freqDomain);
+      // console.log(freqDomain);
+    }
+    function noteOff() {
+      oscillator.disconnect(audio.destination);
+      // oscillatorFreq = 440;
+    }
+
+
+    // ----- INTERACTION ----- //
+    var note = 0;
+    window.addEventListener("keydown", function(e) {
+     switch (e.keyCode) {   // check keyCode here http://keycode.info/
+          case 65:  // A key
+            oscillator.detune.setValueAtTime(0, audio.currentTime); // C4 note
+            note = 'C4';
+            noteOn(); 
+          break;
+          case 87:  // W key
+            oscillator.detune.setValueAtTime(100, audio.currentTime); // C4# note
+            note = 'C4#';
+            noteOn();
+          break;
+          case 83:  // S key
+            oscillator.detune.setValueAtTime(200, audio.currentTime); // D4 note
+            note = 'D4';
+            noteOn();
+          break;
+          case 69:  // E key
+            oscillator.detune.setValueAtTime(300, audio.currentTime); // D4# note
+            note = 'D4#';
+            noteOn();
+          break;
+          case 68:  // D key
+            oscillator.detune.setValueAtTime(400, audio.currentTime); // E4 note
+            note = 'E4';
+            noteOn();
+          break;
+          case 70:  // F key
+            oscillator.detune.setValueAtTime(500, audio.currentTime); // F4 note
+            note = 'F4';
+            noteOn();
+          break;
+          case 84:  // T key
+            oscillator.detune.setValueAtTime(600, audio.currentTime); // F4# note
+            note = 'F4#';
+            noteOn();
+          break;
+          case 71:  // G key
+            oscillator.detune.setValueAtTime(700, audio.currentTime); // G4 note
+            note = 'G4';
+            noteOn();
+          break;
+          case 89:  // Y key
+            oscillator.detune.setValueAtTime(800, audio.currentTime); // G4# note
+            note = 'G4#';
+            noteOn();
+          break;
+          case 72:  // H key
+            oscillator.detune.setValueAtTime(900, audio.currentTime); // A4 note
+            note = 'A4';
+            noteOn();
+          break;
+          case 74:  // J key
+            oscillator.detune.setValueAtTime(1000, audio.currentTime); // B4 note
+            note = 'B4';
+            noteOn();
+          break;
+          case 75:  // K key
+            oscillator.detune.setValueAtTime(1100, audio.currentTime); // C5 note
+            note = 'C5';
+            noteOn();
+          break;
+     }
+     document.getElementById("oscNote").innerHTML = note;
+    })
+    window.addEventListener("keyup", noteOff);
+
+    console.log(note);
+
+    // ----- UI FEEDBACK ----- //
+    document.getElementById("oscType").innerHTML = oscillator.type;
+  </script>
+</html>

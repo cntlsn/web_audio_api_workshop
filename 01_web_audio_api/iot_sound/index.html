@@ -1,0 +1,109 @@
+<!-- 
+
+  | ~ ~ ~ ~ ~ ~ || WEB AUDIO API WORKSHOP || ~ ~ ~ ~ ~ ~ |
+
+  This file will play make a call to ThingSpeak channel,
+  read data from it and use it as the base frequency to
+  play oscillator with offset timing.
+
+  By Alessandro Contini
+
+  Released under Beer-Ware license https://en.wikipedia.org/wiki/Beerware
+
+ -->
+
+<!DOCTYPE html>
+<html lang="en" ng-app>
+  <head>
+      <meta charset="utf-8">
+      <title></title>
+      <meta name="viewport" content="width=device-width">
+      <script src="https://code.angularjs.org/1.2.6/angular.min.js"></script> 
+      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+  </head>
+
+<!-- THE STYLE -->
+  <style type="text/css">
+    body {
+      font-family: Helvetica, Arial;
+      font-weight: bold;
+      text-align: center;
+    }
+    h1 {
+      font-size: 3em;
+      color: red;
+    }
+    span {
+      font-size: 20em;
+    }
+  </style>
+
+<!-- THE CONTENT -->
+  <body ng-controller="ArduinoCtrl">
+    <h1>The Sound of the Internet</h1>
+    <span>{{ reading }} Hz</span>
+  </body>
+
+<!-- THE MAGIC -->
+  <script> 
+    function ArduinoCtrl($scope, $interval) {
+
+      // Create audio context
+      var context = new AudioContext();
+
+      // Create oscillators
+      var osc = context.createOscillator();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(0, context.currentTime);
+      osc.start();
+      osc.connect(context.destination);
+
+      var osc2 = context.createOscillator();
+      osc2.type = 'square';
+      osc2.frequency.setValueAtTime(0, context.currentTime);
+      osc2.detune.setValueAtTime(400, 0);
+      osc2.start();
+      osc2.connect(context.destination);
+
+      var osc3 = context.createOscillator();
+      osc3.type = 'sine';
+      osc3.frequency.setValueAtTime(0, context.currentTime);
+      osc3.detune.setValueAtTime(700, 0);
+      osc3.start();
+      osc3.connect(context.destination);
+
+      var osc4 = context.createOscillator();
+      osc4.type = 'sawtooth';
+      osc4.frequency.setValueAtTime(0, context.currentTime);
+      osc4.detune.setValueAtTime(-1200, 0);
+      osc4.start();
+      osc4.connect(context.destination);
+
+      // Variable to store frequency value
+      var val;
+
+      // Get JSON file from ThingSpeak
+      $interval(function getData() {
+              // https://api.thingspeak.com/channels/[CHANNEL_NUMBER_HERE]/feed/last.json?callback=?
+              $.getJSON('https://api.thingspeak.com/channels/511461/feed/last.json?callback=?', function(data) {
+                val = data.field1;  // get light data
+                // val = (data.field1) - 300; // if light is to bright!!!
+                $scope.reading = val; // pass the value to be used in the content
+                updateFreq(val);  // call function to update frequency value
+              });
+            }, 1000);
+
+      // Update frequency value
+      function updateFreq(val) {
+        console.log("light value:", val);
+        // osc.frequency.setValueAtTime(val, context.currentTime);
+        
+        // For some reason setTargetAtTime is buggy in Chrome...
+        osc.frequency.setTargetAtTime(val, context.currentTime, 15);
+        osc2.frequency.setTargetAtTime(val, context.currentTime + 10, 15);
+        osc3.frequency.setTargetAtTime(val, context.currentTime + 20, 15);
+        osc4.frequency.setTargetAtTime(val, context.currentTime + 30, 15);
+      }   
+    }
+  </script>
+</html>

@@ -1,0 +1,72 @@
+<!-- 
+
+  | ~ ~ ~ ~ ~ ~ || WEB AUDIO API WORKSHOP || ~ ~ ~ ~ ~ ~ |
+
+  This file will play a sound when PLAY button clicked,
+  and stop when STOP button clicked.
+
+  By Alessandro Contini
+
+  Released under Beer-Ware license https://en.wikipedia.org/wiki/Beerware
+
+ -->
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Click to play a sample</title>
+</head>
+
+<body>
+    <button id="playButton">PLAY</button>
+    <button id="stopButton">STOP</button>
+</body>
+
+<script>
+    // Create audio context
+    var context = new AudioContext();
+
+    // Choose the sample
+    var fileName = 'amen.wav';
+
+    // Make a request and load the sample into a buffer
+    function start() {
+        // Note: this will load asynchronously
+        var request = new XMLHttpRequest();
+        request.open("GET", fileName, true);
+        request.responseType = "arraybuffer"; // Read as binary data
+
+        // Asynchronous callback
+        request.onload = function() {
+            var data = request.response;
+            audioRouting(data);
+        };
+        request.send();
+    }
+
+    // Create Buffered Sound Source and connect to output
+    function audioRouting(data) {
+        source = context.createBufferSource(); // Create sound source
+        context.decodeAudioData(data, function(buffer){ // Create source buffer from raw binary
+        source.buffer = buffer; // Add buffered data to object
+        source.connect(context.destination); // Connect sound source to output
+        playSound(source); // Pass the object to the play function
+        });
+    }
+
+    // Tell the Source when to play
+    function playSound() {
+        source.start(context.currentTime); // play the source immediately
+    }
+
+    // Stop playing the file
+    function stopSound() {
+        source.stop(context.currentTime); // stop the source immediately
+    }
+
+    // Listen to PLAY and STOP buttons
+    document.querySelector('#playButton').addEventListener('click', start);
+    document.querySelector('#stopButton').addEventListener('click', stopSound);
+</script>
+</html>

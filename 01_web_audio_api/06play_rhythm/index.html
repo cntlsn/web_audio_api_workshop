@@ -1,0 +1,44 @@
+<!-- 
+
+  | ~ ~ ~ ~ ~ ~ || WEB AUDIO API WORKSHOP || ~ ~ ~ ~ ~ ~ |
+
+  This file will play a rhythm with two samples.
+  The rhythm is declared in the rhythm-sample.js file
+
+  By Alessandro Contini
+  based on work by Boris Smus
+
+  Released under Beer-Ware license https://en.wikipedia.org/wiki/Beerware
+
+ -->
+
+<html>
+  <head>
+    <title>Browser rhythm</title>
+  </head>
+  
+<!-- THE STYLE -->
+  <style type="text/css">
+    body {
+      font-family: Helvetica, Arial;
+      font-weight: bold;
+      font-size: 5em;
+      text-align: center;
+    }
+  </style>
+
+<!-- THE CONTENT -->
+  <body>
+    <button>Click me for Rhythm!</button>
+  </body>
+
+<!-- THE MAGIC! -->
+  <script src="shared.js"></script>
+  <script src="rhythm-sample.js"></script>
+  <script type="text/javascript">
+    var sample = new RhythmSample();
+    document.querySelector('button').addEventListener('click', function() {
+      sample.play();
+    });
+  </script>
+</html>

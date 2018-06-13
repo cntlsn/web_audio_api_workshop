@@ -1,0 +1,122 @@
+<!-- 
+
+  | ~ ~ ~ ~ ~ ~ || WEB AUDIO API WORKSHOP || ~ ~ ~ ~ ~ ~ |
+
+  This file will play a sine wave and add tremolo effect
+  through an LFO.
+
+  Change oscillator and LFO type, frequency and gain values
+  to create interesting effects.
+
+  By Alessandro Contini
+
+  Released under Beer-Ware license https://en.wikipedia.org/wiki/Beerware
+
+ -->
+
+<html>
+  <head>
+    <title>LFO</title>
+  </head>
+
+<!-- THE STYLE -->
+  <style type="text/css">
+    body {
+      font-family: Helvetica, Arial;
+      font-weight: bold;
+      font-size: 4em;
+      /*text-align: center;*/
+    }
+  </style>
+
+<!-- THE CONTENT -->
+  <body>
+    <p>Click everywhere to Play and to Stop!</p>
+    <div id="ui">
+      <!-- Empty element to be filled with oscillator waveform type and frequency value -->
+    </div>
+  </body>
+
+<!-- THE MAGIC! -->
+  <script type="text/javascript">
+    // Create audio (context) container
+    var audio = new (AudioContext || webkitAudioContext)();
+
+    // ----- PARAMETERS ----- //
+    var oscillatorType = 'sine';
+    var oscillatorFreq = 440;
+    var oscillatorGain = .5;
+
+    var lfoType = 'sine';
+    var lfoFreq = 1;
+    var lfoGain = .4;
+
+    // ----- OSCILLATOR ----- //
+    // Create an oscillator
+    var oscillator = audio.createOscillator();
+    // Choose waveform: 'sine', 'triangle', 'sawtooth', and 'square'
+    oscillator.type = oscillatorType;
+    // Choose frequency
+    oscillator.frequency.setValueAtTime(oscillatorFreq, 0);
+    // Start the waveform
+    oscillator.start(audio.currentTime);
+
+    // ----- GAIN ----- //
+    var gainNode = audio.createGain();
+    gainNode.gain.setValueAtTime(oscillatorGain, 0);
+
+    // ----- ROUTING ----- //
+    // oscillator.connect(gainNode);
+    gainNode.connect(audio.destination);
+
+    // ----- LFO ----- //
+    var lfo = audio.createOscillator();
+    lfo.type = lfoType;
+    lfo.frequency.setValueAtTime(lfoFreq, 0);
+    lfo.start(audio.currentTime);
+
+    // ----- LFO GAIN ----- //
+    var lfoGainNode = audio.createGain();
+    lfoGainNode.gain.setValueAtTime(lfoGain, 0);
+
+    // ----- LFO ROUTING ----- //
+    lfo.connect(lfoGainNode);
+    lfoGainNode.connect(gainNode.gain);
+
+
+    // ----- CONSOLE FEEDBACK ----- //
+    // console.log(oscillator.type);
+    // console.log(oscillator.frequency.value);
+
+    // ----- UI FEEDBACK ----- //
+    document.getElementById("ui").innerHTML =
+      "OSCILLATOR: " + 
+      oscillatorType + 
+      " " + 
+      oscillatorFreq + 
+      "<br />" +  
+      "LFO: " +
+      lfoType + 
+      " " + 
+      lfoFreq;
+
+
+    // ----- INTERACTION ----- //
+    window.addEventListener('click', play, true);
+    // window.addEventListener('keydown', playNote);
+    // window.addEventListener('keyup', endNote);
+
+    var playState = 0;
+    function play(e){
+      if (playState==0) {
+        oscillator.connect(gainNode);
+        // lfo.connect(lfoGainNode);
+        playState=1;
+      } else {
+        oscillator.disconnect(gainNode);
+        // lfo.disconnect(lfoGainNode);
+        playState=0;
+      }
+    };
+  </script>
+</html>

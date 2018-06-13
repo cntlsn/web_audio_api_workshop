@@ -1,0 +1,513 @@
+<!-- 
+
+  | ~ ~ ~ ~ ~ ~ || WEB AUDIO API WORKSHOP || ~ ~ ~ ~ ~ ~ |
+
+  This file is a collection of scripts you can copy/paste
+  to add interaction to your Web Audio API instrument.
+  Please open it in a browser to preview the interactions
+  and the code snippets.
+
+  By Alessandro Contini
+
+  Released under Beer-Ware license https://en.wikipedia.org/wiki/Beerware
+
+ -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>JS Interaction</title>
+</head>
+
+<style type="text/css">
+  body {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  h1 {
+    font-weight: bold;
+    font-size: 3em;
+  }
+  h2 {
+    font-weight: 100;
+    font-size: 2em;
+  }
+  .row {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background: whitesmoke;
+    max-width: 800px;
+  }
+  input {
+    display: block;
+  }
+  pre {
+    margin: .5em 0;
+  }
+  pre, code {
+    padding: 0 .5em;
+    background-color: springgreen;
+  }
+  a {
+    font-style: italic;
+  }
+</style>
+
+<body>
+<h1>The basic JS interactions 👉</h1>
+
+<div class="row">
+<h2>How to write code for interactions</h2>
+<b>Event attributes:</b> assign interaction to HTML elements directly
+<pre>
+<code>
+&lt;button onclick="buttonDemo01()"&gt;Click me&lt;/button&gt;
+&lt;span id="resultDemo01"&gt;&lt;/span&gt;
+&lt;script type="text/javascript"&gt;
+  function buttonDemo01() {
+    document.getElementById("resultDemo01").innerHTML = "Hello World";
+    // It's also possible to write:
+    // document.querySelector("#resultDemo01").innerHTML = "Hello World";
+  }
+&lt;/script&gt;
+</code>
+</pre>
+<button onclick="buttonDemo01()">Click me</button>
+<span id="resultDemo01"></span>
+<script type="text/javascript">
+  function buttonDemo01() {
+    document.getElementById("resultDemo01").innerHTML = "Hello World";
+    // It's also possible to write:
+    // document.querySelector("#resultDemo01").innerHTML = "Hello World";
+  }
+</script>
+<br>
+<a href="https://www.w3schools.com/js/js_htmldom_events.asp" target="_blank">learn more...</a><br>
+<a href="https://www.w3schools.com/jsref/met_document_queryselector.asp" target="_blank">learn even more...</a>
+<br>
+<br>
+<br>
+<b>HTML DOM:</b> assign interaction using JavaScript to select an HTML element in the web page 
+<pre>
+<code>
+&lt;button id="button02"&gt;Click me&lt;/button&gt;
+&lt;span id="resultDemo02"&gt;&lt;/span&gt;
+&lt;script type="text/javascript"&gt;
+  document.getElementById("button02").onclick = function buttonDemo02() {
+    document.getElementById("resultDemo02").innerHTML = "Hello World";
+  }
+&lt;/script&gt;
+</code>
+</pre>
+<button id="button02">Click me</button>
+<span id="resultDemo02"></span>
+<script type="text/javascript">
+  document.getElementById("button02").onclick = function buttonDemo02() {
+    document.getElementById("resultDemo02").innerHTML = "Hello World";
+  }
+</script>
+<br>
+<a href="https://www.w3schools.com/js/js_htmldom_events.asp" target="_blank">learn more...</a>
+<br>
+<br>
+<br>
+<b>Event Listener:</b> listen for events in the web page and do something when they happen 
+<pre>
+<code>
+&lt;button id="button03"&gt;Click me&lt;/button&gt;
+&lt;span id="resultDemo03"&gt;&lt;/span&gt;
+&lt;script type="text/javascript"&gt;
+  var button = document.getElementById("button03");
+  button.addEventListener("click", buttonDemo03, false);
+  function buttonDemo03() {
+    document.getElementById("resultDemo03").innerHTML = "Hello World";
+  }
+&lt;/script&gt;
+</code>
+</pre>
+<button id="button03">Click me</button>
+<span id="resultDemo03"></span>
+<script type="text/javascript">
+  var button = document.getElementById("button03");
+  button.addEventListener("click", buttonDemo03, false);
+  function buttonDemo03() {
+    document.getElementById("resultDemo03").innerHTML = "Hello World";
+  }
+</script>
+<br>
+<a href="https://www.kirupa.com/html5/javascript_events.htm" target="_blank">learn more...</a><br>
+<a href="https://www.kirupa.com/html5/event_capturing_bubbling_javascript.htm" target="_blank">learn even more...</a>
+</div>
+
+<div class="row">
+<h2>Basic Mouse interactions</h2>
+<b>Click event</b>
+<pre>
+<code>
+&lt;p&gt;
+  &lt;span&gt;Mouse coordinates: &lt;/span&gt;
+  &lt;span id="mouseDemo01"&gt;&lt;/span&gt;
+&lt;/p&gt;
+&lt;script type="text/javascript"&gt;
+  document.addEventListener('click', function(){mouseClicked(event)}, false);
+  function mouseClicked(e) {
+    x = e.clientX;
+    y = e.clientY;
+    coor = "(" + x + ", " + y + ")";
+    document.getElementById("mouseDemo01").innerHTML = coor
+  }
+&lt;/script&gt;
+</code>
+</pre>
+<p>
+  <span>Click everywhere to show mouse coordinates on click: </span>
+  <span id="mouseDemo01"></span>
+</p>
+<script type="text/javascript">
+  document.addEventListener('click', function(){mouseClicked(event)}, false);
+  function mouseClicked(e) {
+    x = e.clientX;
+    y = e.clientY;
+    coor = "(" + x + ", " + y + ")";
+    document.getElementById("mouseDemo01").innerHTML = coor
+  }
+</script>
+<br>
+<br>
+<b>Mouse move event</b>
+<pre>
+<code>
+&lt;p&gt;
+  &lt;span&gt;Move mouse to get coordinates: &lt;/span&gt;
+  &lt;span id="mouseDemo02"&gt;&lt;/span&gt;
+&lt;/p&gt;
+&lt;script type="text/javascript"&gt;
+  document.addEventListener('mousemove', function(){getCoordinates(event)}, false);
+  function getCoordinates(e) {
+    x = e.clientX;
+    y = e.clientY;
+    coor = "(" + x + ", " + y + ")";
+    document.getElementById("mouseDemo02").innerHTML = coor
+  }
+&lt;/script&gt;
+</code>
+</pre>
+<p>
+  <span>Move mouse to get coordinates: </span>
+  <span id="mouseDemo02"></span>
+</p>
+<script type="text/javascript">
+  document.addEventListener('mousemove', function(){getCoordinates(event)}, false);
+  function getCoordinates(e) {
+    x = e.clientX;
+    y = e.clientY;
+    coor = "(" + x + ", " + y + ")";
+    document.getElementById("mouseDemo02").innerHTML = coor
+  }
+</script>
+<br>
+<br>
+<b>Mouse over & Mouse out events</b>
+<pre>
+<code>
+&lt;p&gt;
+  &lt;span&gt;Move cursor over the red box: &lt;/span&gt;
+  &lt;span id="mouseDemo03"&gt;&lt;/span&gt;
+&lt;/p&gt;
+&lt;div style="width: 50px; height: 50px; background: red;" id="redBox"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+  var redBox = document.getElementById('redBox');
+  redBox.addEventListener('mouseover', triggerMouseIn, false);
+  redBox.addEventListener('mouseout', triggerMouseOut, false);
+  function triggerMouseIn() {
+    document.getElementById("mouseDemo03").innerHTML = "MOUSE INSIDE";
+  }
+  function triggerMouseOut() {
+    document.getElementById("mouseDemo03").innerHTML = "MOUSE OUTSIDE";
+  }
+&lt;/script&gt;
+</code>
+</pre>
+<p>
+  <span>Move cursor over the red box: </span>
+  <span id="mouseDemo03"></span>
+</p>
+<div style="width: 50px; height: 50px; background: red;" id="redBox"></div>
+<script type="text/javascript">
+  var redBox = document.getElementById('redBox');
+  redBox.addEventListener('mouseover', triggerMouseIn, false);
+  redBox.addEventListener('mouseout', triggerMouseOut, false);
+  function triggerMouseIn() {
+    document.getElementById("mouseDemo03").innerHTML = "MOUSE INSIDE";
+  }
+  function triggerMouseOut() {
+    document.getElementById("mouseDemo03").innerHTML = "MOUSE OUTSIDE";
+  }
+</script>
+</div>
+
+<div class="row">
+<h2>Basic Keyboard interactions</h2>
+<b>Key down & Key up events</b>
+<pre>
+<code>
+&lt;p&gt;
+  &lt;span&gt;Press, hold and release a key on your keyboard: &lt;/span&gt;
+  &lt;span id="keyDemo01"&gt;&lt;/span&gt;
+&lt;/p&gt;
+&lt;script type="text/javascript"&gt;
+  document.addEventListener('keydown', keyDown, false);
+  document.addEventListener('keyup', keyUp, false);
+  function keyDown() {
+    document.getElementById("keyDemo01").innerHTML = "KEY PRESSED 😍";
+  }
+  function keyUp() {
+    document.getElementById("keyDemo01").innerHTML = "KEY RELEASED 😮";
+  }
+&lt;/script&gt;
+</code>
+</pre>
+<p>
+  <span>Press, hold and release a key on your keyboard: </span>
+  <span id="keyDemo01"></span>
+</p>
+<script type="text/javascript">
+  document.addEventListener('keydown', keyDown, false);
+  document.addEventListener('keyup', keyUp, false);
+  function keyDown() {
+    document.getElementById("keyDemo01").innerHTML = "KEY PRESSED 😍";
+  }
+  function keyUp() {
+    document.getElementById("keyDemo01").innerHTML = "KEY RELEASED 😮";
+  }
+</script>
+<br>
+<br>
+<b>Get key code</b>
+<pre>
+<code>
+&lt;p&gt;
+  &lt;span&gt;Press a random a key on your keyboard to show its keycode: &lt;/span&gt;
+  &lt;span id="keyDemo02"&gt;&lt;/span&gt;
+&lt;/p&gt;
+&lt;script type="text/javascript"&gt;
+  document.addEventListener('keydown', function(){getKeyCode(event)}, false);
+  function getKeyCode(event) {
+    document.getElementById("keyDemo02").innerHTML = event.keyCode;
+  }
+&lt;/script&gt;
+</code>
+</pre>
+<p>
+  <span>Press a random a key on your keyboard to show its keycode: </span>
+  <span id="keyDemo02"></span>
+</p>
+<script type="text/javascript">
+  document.addEventListener('keydown', function(){getKeyCode(event)}, false);
+  function getKeyCode(event) {
+    document.getElementById("keyDemo02").innerHTML = event.keyCode;
+  }
+</script>
+</div>
+
+<div class="row">
+<h2>Other interesting interactions</h2>
+<b>Button as toggle</b>
+<pre>
+<code>
+&lt;p&gt;
+&lt;button id="buttonAsToggle"&gt;Show&lt;/button&gt;
+&lt;span id="buttonAsToggleResult"&gt;&lt;/span&gt;
+&lt;script type="text/javascript"&gt;
+// INTERACTION
+document.querySelector('#buttonAsToggle').addEventListener('click', function() {
+    showContent()
+  }
+);
+
+// TOGGLE FUNCTION
+var isShown = false;
+
+function showContent() {
+  if (isShown) {
+    document.querySelector("#buttonAsToggleResult").innerHTML = "";
+    document.querySelector("#buttonAsToggle").innerHTML = "Show";
+  } else {
+    document.querySelector("#buttonAsToggleResult").innerHTML = "HERE I AM 👻";
+    document.querySelector("#buttonAsToggle").innerHTML = "Hide";
+  }
+  isShown = !isShown;
+}
+&lt;/script&gt;
+</code>
+</pre>
+<button id="buttonAsToggle">Show</button>
+<span id="buttonAsToggleResult"></span>
+<script type="text/javascript">
+// INTERACTION
+document.querySelector('#buttonAsToggle').addEventListener('click', function() {
+    showContent()
+  }
+);
+
+// TOGGLE FUNCTION
+var isShown = false;
+
+function showContent() {
+  if (isShown) {
+    document.querySelector("#buttonAsToggleResult").innerHTML = "";
+    document.querySelector("#buttonAsToggle").innerHTML = "Show";
+  } else {
+    document.querySelector("#buttonAsToggleResult").innerHTML = "HERE I AM 👻";
+    document.querySelector("#buttonAsToggle").innerHTML = "Hide";
+  }
+  isShown = !isShown;
+}
+</script>
+<br>
+<br>
+<br>
+<b>Slider value</b>
+<pre>
+<code>
+&lt;input id="slider" type="range" min="0" max="10" step="1"&gt;
+&lt;p&gt;
+  &lt;span&gt;Value: &lt;/span&gt;
+  &lt;span id="sliderValue"&gt;&lt;/span&gt;
+&lt;/p&gt;
+&lt;script type="text/javascript"&gt;
+var slider = document.querySelector('#slider');
+var sliderValue =  document.querySelector('#sliderValue');
+
+slider.oninput = function() {
+  sliderValue.innerHTML = slider.value;
+}
+&lt;/script&gt;
+</code>
+</pre>
+<input id="slider" type="range" min="0" max="10" step="1">
+<p>
+  <span>Value: </span>
+  <span id="sliderValue"></span>
+</p>
+<script type="text/javascript">
+var slider = document.querySelector('#slider');
+var sliderValue =  document.querySelector('#sliderValue');
+
+slider.oninput = function() {
+  sliderValue.innerHTML = slider.value;
+}
+</script>
+<br>
+<br>
+<br>
+<b>Radio value</b>
+<pre>
+<code>
+&lt;form&gt;
+  &lt;div&gt;
+    &lt;input type="radio" id="radioChoice1" name="radio" value="01"&gt;
+    &lt;label for="radioChoice1"&gt;01&lt;/label&gt;
+
+    &lt;input type="radio" id="radioChoice2" name="radio" value="02"&gt;
+    &lt;label for="radioChoice2"&gt;02&lt;/label&gt;
+
+    &lt;input type="radio" id="radioChoice3" name="radio" value="03"&gt;
+    &lt;label for="radioChoice3"&gt;03&lt;/label&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+&lt;p&gt;
+  &lt;span&gt;Value: &lt;/span&gt;
+  &lt;span id="radioValue"&gt;&lt;/span&gt;
+&lt;/p&gt;
+&lt;script type="text/javascript"&gt;
+var radio01 = document.querySelector('#radioChoice1');
+var radio02 = document.querySelector('#radioChoice2');
+var radio03 = document.querySelector('#radioChoice3');
+var radioValue =  document.querySelector('#radioValue');
+
+radio01.oninput = function() {
+  radioValue.innerHTML = radio01.value;
+}
+radio02.oninput = function() {
+  radioValue.innerHTML = radio02.value;
+}
+radio03.oninput = function() {
+  radioValue.innerHTML = radio03.value;
+}
+&lt;/script&gt;
+</code>
+</pre>
+<form>
+  <div>
+    <input type="radio" id="radioChoice1" name="radio" value="01">
+    <label for="radioChoice1">01</label>
+
+    <input type="radio" id="radioChoice2" name="radio" value="02">
+    <label for="radioChoice2">02</label>
+
+    <input type="radio" id="radioChoice3" name="radio" value="03">
+    <label for="radioChoice3">03</label>
+  </div>
+</form>
+<p>
+  <span>Value: </span>
+  <span id="radioValue"></span>
+</p>
+<script type="text/javascript">
+var radio01 = document.querySelector('#radioChoice1');
+var radio02 = document.querySelector('#radioChoice2');
+var radio03 = document.querySelector('#radioChoice3');
+var radioValue =  document.querySelector('#radioValue');
+
+radio01.oninput = function() {
+  radioValue.innerHTML = radio01.value;
+}
+radio02.oninput = function() {
+  radioValue.innerHTML = radio02.value;
+}
+radio03.oninput = function() {
+  radioValue.innerHTML = radio03.value;
+}
+</script>
+</div>
+
+
+<h2>All the interactions</h2>
+<ul>
+  <li>
+    <a href="https://www.w3schools.com/js/js_events_examples.asp" target="_blank">Lots of reusable examples</a>
+  </li>
+  <li>
+    <a href="https://www.w3.org/TR/DOM-Level-3-Events/#events-uievent-types" target="_blank">The bible of UI Events</a>
+  </li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

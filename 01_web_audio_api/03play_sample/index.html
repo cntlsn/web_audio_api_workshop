@@ -1,0 +1,61 @@
+<!-- 
+
+  | ~ ~ ~ ~ ~ ~ || WEB AUDIO API WORKSHOP || ~ ~ ~ ~ ~ ~ |
+
+  This file will play a sample (snare.wav) when loaded.
+
+  By Alessandro Contini
+
+  Released under Beer-Ware license https://en.wikipedia.org/wiki/Beerware
+
+ -->
+
+<html>
+  <head>
+    <title>Play a sample</title>
+  </head>
+
+<!-- THE STYLE -->
+  <style type="text/css"></style>
+
+<!-- THE CONTENT -->
+  <body></body>
+
+<!-- THE MAGIC! -->
+  <script type="text/javascript">
+    // Create audio context
+    var context = new AudioContext(), buffer;
+
+    // Choose the sample
+    var fileName = 'kick.wav';
+
+    // Make a request and load the sample into a buffer
+    var loadAudioFile = function(){
+      // Request the file
+      var request = new XMLHttpRequest();
+      request.open('get', fileName, true);
+      // Create the buffer
+      request.responseType = 'arraybuffer';
+      request.onload = function () {
+        context.decodeAudioData(request.response, function(incomingBuffer) {
+          playAudioFile(incomingBuffer); // Trigger the play function
+        });
+      };
+      request.send();
+    };
+    
+    // Function to play the file
+    var playAudioFile = function (buffer) {
+      // Create the buffer source node
+      var source = context.createBufferSource();
+      source.buffer = buffer;
+      // Connect the buffer source node to the "speakers"
+      source.connect(context.destination);
+      // Play sound immediately
+      source.start(0); 
+    };
+
+    // When file opened, load the file and play
+    window.addEventListener('load', loadAudioFile);
+  </script>
+</html>
